@@ -3,7 +3,100 @@
 extern char *s;
 
 
-node* P (node **tree, size_t *index, node *head) {
+#define RULE(rule)    if (*tree == nullptr)                                     \
+                        (*tree) = rule (tree, index, head);                     \
+                      $                              
+
+
+#define $   else {                      \
+            printf ("%d", __LINE__);    \
+            }                        
+
+
+node *new_node () {
+    node *node = (struct node*)calloc(1, sizeof (struct node));
+    return node;
+}
+
+
+node *ASSN (node **tree, size_t *index, node *head) {
+
+    printf ("ASSN: %d\n", *index);
+
+    if (*tree != nullptr)
+        abort ();
+
+    *tree = &head[*index + 1];
+
+    (*tree)->left = &head[*index];
+
+    *index += 2;
+
+    (*tree)->right = P (&(*tree)->right, index, head);
+
+    return *tree;
+}
+
+
+node *COND (node **tree, size_t *index, node *head) {
+
+    printf ("COND: %d\n", *index);
+    
+    node *tmp = new_node ();
+    tmp = *tree;
+    *tree = &head[*index];
+    (*tree)->left = tmp;
+
+    ++*index;
+    // printf ("%d", head[*index].data);
+
+    if (head[*index].data != '[')
+        SYNTAX_ERROR
+    ++*index;
+
+    (*tree)->left  = E (&(*tree)->left,  index, head);
+printf ("EQEWQ:%d\n", head[*index].data);
+    if (check_operations (head[*index].data) == 0)
+        SYNTAX_ERROR
+
+    (*tree)->left = SRAV (&(*tree)->left, index, head);
+    ++*index;
+    // printf ("\n%d\n", head[*index].data);
+
+    (*tree)->left->right  = E (&(*tree)->left->right,  index, head);
+    // puts ("OK");
+    if (head[*index].data != ']')
+        SYNTAX_ERROR
+    ++*index;
+
+    printf ("\n%d %d\n", __LINE__, head[*index].data);
+    (*tree)->right = S (&(*tree)->right, index, head);
+
+    printf ("AFTER {} %d\n", head[*index].data);
+    
+    // if ((*tree)->right->right == nullptr)
+    //     abort ();
+    // (*tree)->right->right  = E (&(*tree)->right->right,  index, head);
+
+    // printf ("AFTER E: %d %d\n", __LINE__, head[*index+1].data);
+    return *tree;
+}
+
+
+node *SRAV (node **tree, size_t *index, node *head) {
+
+    node *tmp = new_node ();
+    tmp = *tree;
+    *tree = &head[*index];
+    (*tree)->left = tmp;
+
+    return *tree;
+}
+
+
+node *P (node **tree, size_t *index, node *head) {
+
+    printf ("P: %d\n", *index);
 
     if (head[*index].type == PARANTHESIS && head[*index].data == '(') {
         
@@ -15,17 +108,41 @@ node* P (node **tree, size_t *index, node *head) {
             ++*index;
             return *tree;
         }
-        else 
+        else {
+            puts ("ABORT in )");
             SYNTAX_ERROR
+        }
     }
     else if (head[*index].type == NUMBER) {
         RULE(N);
         ++*index;
         return *tree;
     }
+    else if (head[*index].type == VARIABLE && head[*index + 1].data == '=') {
+        RULE(ASSN);
+        // ++*index;
+        return *tree;
+    }
+    // else if (head[*index].type == VARIABLE && check_operations (head[*index + 1].data)) {
+    //     RULE(SRAV);
+    //     ++*index;
+    //     return *tree;
+    // }
+
     else if (head[*index].type == VARIABLE) {
         RULE(ID);
         ++*index;
+        return *tree;
+    }
+    else if (head[*index].type == FUNCTION) {
+        RULE(FUNC);
+        ++*index;
+        (*tree)->right = P (&(*tree)->right, index, head);
+        return *tree;
+    }
+    else if (head[*index].type == CONDITION) {
+        RULE(COND);
+        // ++*index;
         return *tree;
     }
     else {
@@ -35,21 +152,47 @@ node* P (node **tree, size_t *index, node *head) {
 }
 
 
+node *FUNC (node **tree, size_t *index, node *head) {
+
+    if (head[*index].type == FUNCTION) {
+        (*tree) = &head[*index];
+        ++*index;
+        
+        if (head[*index].type != FUNCTION_NAME) {
+            printf ("FUNC_NAME abort: %d\n", *index);
+            SYNTAX_ERROR;
+        }
+
+        if ((*tree)->left == nullptr)
+            (*tree)->left = &head[*index];
+        $
+    }
+
+    else {
+        printf ("FUNC abort: %d\n", *index);
+        SYNTAX_ERROR;
+    }
+
+    return *tree;
+}
+
+
 node *ID (node **tree, size_t *index, node *head) {
 
-    if (head[*index].type == VARIABLE) 
+    if (head[*index].type == VARIABLE) {
         printf ("ID: %d\n", *index);
+    }
     else {
         printf ("ID abort: %d\n", *index);
         SYNTAX_ERROR;
     }
-
     return &head[*index];
 }
 
-node* PW (node **tree, size_t *index, node *head) {
 
-    printf ("T: %d\n", *index);
+node *PW (node **tree, size_t *index, node *head) {
+
+    printf ("PW: %d\n", *index);
 
     RULE(P);
 
@@ -57,30 +200,31 @@ node* PW (node **tree, size_t *index, node *head) {
 
     while (head[*index].type == OPERATION && head[*index].data == '^') {
         
-        node *tmp = *tree;
+        node *tmp = new_node ();
+        tmp = *tree;
         *tree = &head[*index];
         
         if ((*tree)->left == nullptr)
             (*tree)->left = tmp;
-        else if ((*tree)->right == nullptr)
-            (*tree)->right = tmp;
+        // else if ((*tree)->right == nullptr)
+        //     (*tree)->right = tmp;
+        $
 
         ++*index;
         
-        if ((*tree)->left == nullptr)
-            (*tree)->left = P (&(*tree)->left, index, head);
-        else if ((*tree)->right == nullptr)
+        // if ((*tree)->left == nullptr)
+        //     (*tree)->left = P (&(*tree)->left, index, head);
+        if ((*tree)->right == nullptr)
             (*tree)->right = P (&(*tree)->right, index, head);
-
+        $
         // ++*index;
     }
     
-    //??
     return *tree;
 }
 
 
-node* T (node **tree, size_t *index, node *head) {
+node *T (node **tree, size_t *index, node *head) {
 
     printf ("T: %d\n", *index);
 
@@ -90,21 +234,23 @@ node* T (node **tree, size_t *index, node *head) {
 
     while (head[*index].type == OPERATION && (head[*index].data == '*' || head[*index].data == '/')) {
         
-        node *tmp = *tree;
+        node *tmp = new_node ();
+        tmp = *tree;
         *tree = &head[*index];
         
-        if ((*tree)->left == nullptr)
+         if ((*tree)->left == nullptr)
             (*tree)->left = tmp;
-        else if ((*tree)->right == nullptr)
-            (*tree)->right = tmp;
+        // if ((*tree)->right == nullptr)
+        //     (*tree)->right = tmp;
+        $
 
         ++*index;
         
-        if ((*tree)->left == nullptr)
-            (*tree)->left = PW (&(*tree)->left, index, head);
-        else if ((*tree)->right == nullptr)
+        // if ((*tree)->left == nullptr)
+        //     (*tree)->left = PW (&(*tree)->left, index, head);
+        if ((*tree)->right == nullptr)
             (*tree)->right = PW (&(*tree)->right, index, head);
-
+        $
         // ++*index;
     }
     
@@ -128,55 +274,106 @@ node *N (node **tree, size_t *index, node *head) {
 
 node* E (node **tree, size_t *index, node *head) {
 
-    if (*tree == nullptr)
-        (*tree) = T (tree, index, head);
-    else if ((*tree)->left == nullptr)
-        (*tree)->left = T (&(*tree)->left, index, head);
-    else if ((*tree)->right == nullptr)
-        (*tree)->right = T (&(*tree)->right, index, head);
-    else 
-        puts ("TILT 127");
+    RULE(T);
+    // else if ((*tree)->left == nullptr)
+    //     (*tree)->left = T (&(*tree)->left, index, head);
+    // else if ((*tree)->right == nullptr)
+    //     (*tree)->right = T (&(*tree)->right, index, head);
 
     // ++*index;
 
     while (head[*index].type == OPERATION && (head[*index].data == '+' || head[*index].data == '-')) {
-    printf ("E: %d\n", *index);
+        printf ("E: %d\n", *index);
 
-        node *tmp = *tree;
+        node *tmp = new_node ();
+        tmp = *tree;
         *tree = &head[*index];
         
         if ((*tree)->left == nullptr)
             (*tree)->left = tmp;
-        else if ((*tree)->right == nullptr)
-            (*tree)->right = tmp;
+        // else if ((*tree)->right == nullptr)
+        //     (*tree)->right = tmp;
+        $
 
         ++*index;
         
-        if ((*tree)->left == nullptr)
-            (*tree)->left = T (&(*tree)->left, index, head);
-        else if ((*tree)->right == nullptr)
+        if ((*tree)->right == nullptr)
             (*tree)->right = T (&(*tree)->right, index, head);
-        else {
-            printf ("%d", __LINE__);
-            abort();
-        }
+        $
         // ++*index;
     }
     
-    //??
     return *tree;
 }
 
+
 node *G (node **tree, size_t *index, node *head) {
 
-    node* nd = E (tree, index, head);
+    node* nd = S (tree, index, head);
 
     if (head[*index].data == '$')
         return nd;
     else {
-        printf ("G abort: %d\n", *index);
+        printf ("G abort: %d\n", head[*index].data);
         SYNTAX_ERROR;
     }
+}
+
+
+node *S (node **tree, size_t *index, node *head) {
+
+    if (head[*index].data == '{') {
+        ++*index;
+        
+        *tree = new_node ();
+        (*tree)->type = SENTENCE;
+        strcpy ((*tree)->id, "SENTENCE");
+
+        (*tree)->left = new_node ();
+        (*tree)->left->type = KILLER;
+        strcpy ((*tree)->left->id, "ya ustal"); 
+        (*tree)->right = E (&(*tree)->right, index, head);
+
+    }
+    else
+        SYNTAX_ERROR
+
+    printf ("S HERE: %d %d\n", head[*index - 1].data, head[*index].data);
+    int num_brackets = 1;
+    while (head[*index].data == '?' && head[*index + 1].data != '}') {
+        // puts ("OK");
+
+        node *tmp = new_node ();
+        tmp->left = *tree;
+        *tree = tmp;
+        (*tree)->type = SENTENCE;
+        strcpy ((*tree)->id, "SENTENCE");
+
+        // puts ("OK");
+        *index += 1;
+        printf ("%d: %d\n", __LINE__,head[*index].data);
+        
+        if ((*tree)->right != nullptr) {
+            printf ("ABORT S: %d\n", *index);
+            abort ();
+        }
+
+        // printf ("%d\n", head[*index].data);
+        (*tree)->right = E (&(*tree)->right, index, head);
+
+        if (head[*index].data != '?')
+            SYNTAX_ERROR
+    }
+
+    if (head[*index].data != '?' || head[*index + 1].data != '}')
+        SYNTAX_ERROR
+
+    ++*index;
+    printf ("%d: %d\n", __LINE__, head[*index].data);
+
+    // printf ("NUM_BRACKETS %d\n", num_brackets);
+    *index += 1;
+    return *tree;
 }
 
 
@@ -194,6 +391,7 @@ size_t find_file_size (FILE *in) {
 
     return size_of_file;
 }
+
 
 void graph (node* head) {
 
@@ -217,101 +415,79 @@ void graph (node* head) {
 }
 
 
-static void in_order_graph (node *node, FILE *out) {
+void print_in_order_graph (node *node, FILE *out) {
+
+    assert (node != nullptr);
+    assert (out  != nullptr);
+
+    if (node->type == NUMBER) {
+        fprintf (out, "\"%p\" [shape=oval];\n", node);
+        fprintf (out, "\"%p\" [style=filled,color=\"hotpink\"];\n", node);
+        fprintf (out, "\"%p\" [label=\"%d\"]\n", node, node->data);
+    }
+    else if (node->type == OPERATION) {
+        fprintf (out, "\"%p\" [shape=record];\n", node);
+        fprintf (out, "\"%p\" [style=filled,color=\"green\"];\n", node);
+        fprintf (out, "\"%p\" [label=\"%s\"]\n", node, node->id);
+    }
+    else if (node->type == VARIABLE) {
+        fprintf (out, "\"%p\" [shape=diamond];\n", node);
+        fprintf (out, "\"%p\" [style=filled,color=\"cyan2\"];\n", node);
+        fprintf (out, "\"%p\" [label=\"%s\"]\n", node, node->id);
+    }
+    else if (node->type == FUNCTION_NAME) {
+        fprintf (out, "\"%p\" [shape=star];\n", node);
+        fprintf (out, "\"%p\" [style=filled,color=\"red\"];\n", node);
+        fprintf (out, "\"%p\" [label=\"%d\"]\n", node, node->data);
+    }
+    else if (node->type == FUNCTION) {
+        fprintf (out, "\"%p\" [shape=oval];\n", node);
+        fprintf (out, "\"%p\" [style=filled,color=\"hotpink\"];\n", node);
+        fprintf (out, "\"%p\" [label=\"%s\"]\n", node, node->id);
+    }
+    else if (node->type == SENTENCE || node->type == KILLER) {
+        fprintf (out, "\"%p\" [shape=rectangle];\n", node);
+        fprintf (out, "\"%p\" [style=filled,fontcolor = white,color=\"black\"];\n", node);
+        fprintf (out, "\"%p\" [label=\"%s\"]\n", node, node->id);   
+    }
+    else if (node->type == CONDITION) {
+        fprintf (out, "\"%p\" [shape=parallelogram];\n", node);
+        fprintf (out, "\"%p\" [style=filled,fontcolor = black,color=\"red\"];\n", node);
+        fprintf (out, "\"%p\" [label=\"%s\"]\n", node, node->id);   
+    }
+    else {
+        fprintf (out, "\"%p\" [shape=oval];\n", node);
+        fprintf (out, "\"%p\" [style=filled,color=\"hotpink\"];\n", node);
+        fprintf (out, "\"%p\" [label=\"%c\"]\n", node, node->data); 
+    }
+}
+
+
+void in_order_graph (node *node, FILE *out) {
     
     assert (node != nullptr);
     assert (out  != nullptr);
 
-        if (node->type == NUMBER) {
-            fprintf (out, "%d [shape=oval];\n", node);
-            fprintf (out, "%d [style=filled,color=\"hotpink\"];\n", node);
-            fprintf (out, "%d [label=\"%d\"]\n", node, node->data);
-        }
-        else if (node->type == OPERATION) {
-            fprintf (out, "%d [shape=record];\n", node);
-            fprintf (out, "%d [style=filled,color=\"green\"];\n", node);
-            fprintf (out, "%d [label=\"%c\"]\n", node, node->data);
-        }
-        else if (node->type == VARIABLE) {
-            fprintf (out, "%d [shape=diamond];\n", node);
-            fprintf (out, "%d [style=filled,color=\"cyan2\"];\n", node);
-            fprintf (out, "%d [label=\"%c\"]\n", node, node->data);
-        }
-        else if (node->type == FUNCTION_NAME) {
-            fprintf (out, "%d [shape=star];\n", node);
-            fprintf (out, "%d [style=filled,color=\"red\"];\n", node);
-            fprintf (out, "%d [label=\"%d\"]\n", node, node->data);
-        }
-        else {
-            fprintf (out, "%d [shape=oval];\n", node);
-            fprintf (out, "%d [style=filled,color=\"hotpink\"];\n", node);
-            fprintf (out, "%d [label=\"%c\"]\n", node, node->data); 
-        }
+    print_in_order_graph (node, out);
 
     if (node->left != nullptr) {
-        fprintf (out, "\"%d\" -> \"%d\";\n", node, node->left);
+        fprintf (out, "\"%p\" -> \"%p\";\n", node, node->left);
 
-        if (node->left->type == NUMBER) {
-            fprintf (out, "%d [shape=oval];\n", node->left);
-            fprintf (out, "%d [style=filled,color=\"hotpink\"];\n", node->left);
-            fprintf (out, "%d [label=\"%d\"]\n", node->left, node->left->data);
-        }
-        else if (node->left->type == OPERATION) {
-            fprintf (out, "%d [shape=record];\n", node->left);
-            fprintf (out, "%d [style=filled,color=\"green\"];\n", node->left);
-            fprintf (out, "%d [label=\"%c\"]\n", node->left, node->left->data);
-        }
-        else if (node->left->type == VARIABLE) {
-            fprintf (out, "%d [shape=diamond];\n", node->left);
-            fprintf (out, "%d [style=filled,color=\"cyan2\"];\n", node->left);
-            fprintf (out, "%d [label=\"%c\"]\n", node->left, node->left->data);
-        }
-        else if (node->left->type == FUNCTION_NAME) {
-            fprintf (out, "%d [shape=star];\n", node->left);
-            fprintf (out, "%d [style=filled,color=\"red\"];\n", node->left);
-            fprintf (out, "%d [label=\"%d\"]\n", node->left, node->left->data);
-        }
-        else {
-            fprintf (out, "%d [shape=oval];\n", node->left);
-            fprintf (out, "%d [style=filled,color=\"hotpink\"];\n", node->left);
-            fprintf (out, "%d [label=\"%c\"]\n", node->left, node->left->data); 
-        }
+        print_in_order_graph (node->left, out);
+
         fprintf (out, "\n");
         in_order_graph (node->left, out);
     }
 
     if (node->right != nullptr) {
-        fprintf (out, "\"%d\" -> \"%d\";\n", node, node->right);
+        fprintf (out, "\"%p\" -> \"%p\";\n", node, node->right);
 
-        if (node->right->type == NUMBER) {
-            fprintf (out, "%d [shape=oval];\n", node->right);
-            fprintf (out, "%d [style=filled,color=\"hotpink\"];\n", node->right);
-            fprintf (out, "%d [label=\"%d\"]\n", node->right, node->right->data);
-        }
-        else if (node->right->type == OPERATION) {
-            fprintf (out, "%d [shape=record];\n", node->right);
-            fprintf (out, "%d [style=filled,color=\"green\"];\n", node->right);
-            fprintf (out, "%d [label=\"%c\"]\n", node->right, node->right->data);
-        }
-        else if (node->right->type == VARIABLE) {
-            fprintf (out, "%d [shape=diamond];\n", node->right);
-            fprintf (out, "%d [style=filled,color=\"cyan2\"];\n", node->right);
-            fprintf (out, "%d [label=\"%c\"]\n", node->right, node->right->data);
-        }
-        else if (node->right->type == FUNCTION_NAME) {
-            fprintf (out, "%d [shape=star];\n", node->right);
-            fprintf (out, "%d [style=filled,color=\"red\"];\n", node->right);
-            fprintf (out, "%d [label=\"%d\"]\n", node->right, node->right->data);
-        }
-        else {
-            fprintf (out, "%d [shape=oval];\n", node->right);
-            fprintf (out, "%d [style=filled,color=\"hotpink\"];\n", node->right);
-            fprintf (out, "%d [label=\"%c\"]\n", node->right, node->right->data); 
-        }        fprintf (out, "\n");
+        print_in_order_graph (node->right, out);
+
+        fprintf (out, "\n");
         in_order_graph (node->right, out);
-
     }
-    
+
     return;
 }
 
@@ -335,3 +511,197 @@ char* fill_text (FILE* in, size_t file_size) {
 
     return text_array;
 }
+
+
+bool check_func (int a) {
+    switch (a) {
+        case LN:
+            return 1;
+        break;
+
+        case SIN:
+            return 1;
+        break;
+
+        case COS:
+            return 1;
+        break;
+
+        default:
+            return 0;
+        break;
+    }
+}
+
+
+bool check_operations (int a) {
+    switch (a) {
+        case ASS:
+            return 1;
+        break;
+        
+        case LP:
+            return 1;
+        break;
+
+        case RP:
+            return 1;
+        break;
+
+        case OPER_EQ:
+            return 1;
+        break;
+        
+        case OPER_NE:
+            return 1;
+        break;
+
+        case OPER_LE:
+            return 1;
+        break;
+
+        case OPER_L:
+            return 1;
+        break;
+
+        case OPER_G:
+            return 1;
+        break;
+
+        case OPER_GE:
+            return 1;
+        break;
+
+        default:
+            return 0;
+        break;
+    }
+}
+
+
+bool check_keywords (int a) {
+    switch (a) {
+        case IF:
+            return 1;
+        break;
+
+        case WHILE:
+            return 1;
+        break;
+
+        default:
+            return 0;
+        break;
+    }
+}
+
+
+void skip_symbols (char **s) {
+
+    assert (*s != nullptr);
+
+    while (1) {
+        if (**s != ' ' && **s != '\t' && **s != '\n' && **s != '\r')
+            break;
+            ++(*s);
+    }
+}
+
+
+size_t token_ctor (node *head, char *s, size_t size) {
+
+    size_t index = 0;
+
+    while (1) {
+        skip_symbols (&s);
+        // printf ("%c", *s);
+        if (isdigit (*s)) {
+
+            head[index].type = NUMBER;
+            head[index].data = 0;
+
+            while (1) {
+                        // printf ("%c", *s);
+                head[index].data = head[index].data * 10 + *s - '0';
+                if (isdigit (*(s + 1)) == 0)
+                    break;
+                else
+                    ++s;
+            }
+        }
+        else if (*s == ')' || *s == '(') {
+
+            head[index].type = PARANTHESIS;
+            head[index].data = *s;
+        }
+        else if (*s == '$') {
+            head[index].type = KILLER;
+            head[index].data = *s;
+            break;
+        }
+        else if (isalpha (*s)) {
+
+            head[index].type  = VARIABLE;
+            head[index].id[0] = '\0';
+            head[index].data  = 0;
+
+                
+            while (1) {
+                        // printf ("%c", *s);
+                head[index].id[strlen(head[index].id) + 1] = '\0';
+                head[index].id[strlen(head[index].id)] = *s;
+                head[index].data += *s;
+
+                if (isalpha (*(s + 1)) == 0)
+                    break;
+                else
+                    ++s;
+            }
+            
+            if (check_func (head[index].data)) {
+                
+                head[index + 1] = head[index];
+                head[index + 1].type = FUNCTION_NAME;
+
+                head[index].type = FUNCTION;
+                head[index].data = -1;
+                strcpy (head[index].id, "FUNC"); 
+                ++index;
+            }
+            else if (check_keywords (head[index].data)) {
+
+                head[index].type = CONDITION;
+                if (head[index].data == IF)
+                    strcpy (head[index].id, "IF"); 
+                else if (head[index].data == WHILE)
+                    strcpy (head[index].id, "WHILE");
+                else {
+                    SYNTAX_ERROR
+                }
+                head[index].data = -1;
+            }
+            
+        }
+        else {
+            head[index].type = OPERATION;
+            head[index].data  = 0;
+                
+            while (1) {
+                head[index].id[strlen(head[index].id) + 1] = '\0';
+                head[index].id[strlen(head[index].id)] = *s;
+                head[index].data += *s;
+
+                if ((*(s + 1)) != '=')
+                    break;
+                else
+                    ++s;
+            }
+        }
+
+        index++;
+        ++s;
+    }
+    return index + 1;
+}
+
+

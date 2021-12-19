@@ -1,69 +1,133 @@
 digraph structs {
-6618328 [shape=record];
-6618328 [style=filled,color="green"];
-6618328 [label="+"]
-"6618328" -> "6618232";
-6618232 [shape=record];
-6618232 [style=filled,color="green"];
-6618232 [label="*"]
+"00000000001614F0" [shape=rectangle];
+"00000000001614F0" [style=filled,fontcolor = white,color="black"];
+"00000000001614F0" [label="SENTENCE"]
+"00000000001614F0" -> "0000000000161580";
+"0000000000161580" [shape=rectangle];
+"0000000000161580" [style=filled,fontcolor = white,color="black"];
+"0000000000161580" [label="ya ustal"]
 
-6618232 [shape=record];
-6618232 [style=filled,color="green"];
-6618232 [label="*"]
-"6618232" -> "6618208";
-6618208 [shape=oval];
-6618208 [style=filled,color="hotpink"];
-6618208 [label="5"]
+"0000000000161580" [shape=rectangle];
+"0000000000161580" [style=filled,fontcolor = white,color="black"];
+"0000000000161580" [label="ya ustal"]
+"00000000001614F0" -> "000000000064D8B0";
+"000000000064D8B0" [shape=parallelogram];
+"000000000064D8B0" [style=filled,fontcolor = black,color="red"];
+"000000000064D8B0" [label="IF"]
 
-6618208 [shape=oval];
-6618208 [style=filled,color="hotpink"];
-6618208 [label="5"]
-"6618232" -> "6618280";
-6618280 [shape=record];
-6618280 [style=filled,color="green"];
-6618280 [label="^"]
+"000000000064D8B0" [shape=parallelogram];
+"000000000064D8B0" [style=filled,fontcolor = black,color="red"];
+"000000000064D8B0" [label="IF"]
+"000000000064D8B0" -> "000000000064DB30";
+"000000000064DB30" [shape=record];
+"000000000064DB30" [style=filled,color="green"];
+"000000000064DB30" [label="?="]
 
-6618280 [shape=record];
-6618280 [style=filled,color="green"];
-6618280 [label="^"]
-"6618280" -> "6618256";
-6618256 [shape=diamond];
-6618256 [style=filled,color="cyan2"];
-6618256 [label="x"]
+"000000000064DB30" [shape=record];
+"000000000064DB30" [style=filled,color="green"];
+"000000000064DB30" [label="?="]
+"000000000064DB30" -> "000000000064DA30";
+"000000000064DA30" [shape=record];
+"000000000064DA30" [style=filled,color="green"];
+"000000000064DA30" [label="-"]
 
-6618256 [shape=diamond];
-6618256 [style=filled,color="cyan2"];
-6618256 [label="x"]
-"6618280" -> "6618304";
-6618304 [shape=oval];
-6618304 [style=filled,color="hotpink"];
-6618304 [label="3"]
+"000000000064DA30" [shape=record];
+"000000000064DA30" [style=filled,color="green"];
+"000000000064DA30" [label="-"]
+"000000000064DA30" -> "000000000064D9B0";
+"000000000064D9B0" [shape=diamond];
+"000000000064D9B0" [style=filled,color="cyan2"];
+"000000000064D9B0" [label="x"]
 
-6618304 [shape=oval];
-6618304 [style=filled,color="hotpink"];
-6618304 [label="3"]
-"6618328" -> "6618400";
-6618400 [shape=record];
-6618400 [style=filled,color="green"];
-6618400 [label="-"]
+"000000000064D9B0" [shape=diamond];
+"000000000064D9B0" [style=filled,color="cyan2"];
+"000000000064D9B0" [label="x"]
+"000000000064DA30" -> "000000000064DAB0";
+"000000000064DAB0" [shape=oval];
+"000000000064DAB0" [style=filled,color="hotpink"];
+"000000000064DAB0" [label="2"]
 
-6618400 [shape=record];
-6618400 [style=filled,color="green"];
-6618400 [label="-"]
-"6618400" -> "6618376";
-6618376 [shape=oval];
-6618376 [style=filled,color="hotpink"];
-6618376 [label="12"]
+"000000000064DAB0" [shape=oval];
+"000000000064DAB0" [style=filled,color="hotpink"];
+"000000000064DAB0" [label="2"]
+"000000000064DB30" -> "000000000064DBB0";
+"000000000064DBB0" [shape=oval];
+"000000000064DBB0" [style=filled,color="hotpink"];
+"000000000064DBB0" [label="12"]
 
-6618376 [shape=oval];
-6618376 [style=filled,color="hotpink"];
-6618376 [label="12"]
-"6618400" -> "6618424";
-6618424 [shape=oval];
-6618424 [style=filled,color="hotpink"];
-6618424 [label="23"]
+"000000000064DBB0" [shape=oval];
+"000000000064DBB0" [style=filled,color="hotpink"];
+"000000000064DBB0" [label="12"]
+"000000000064D8B0" -> "00000000001618E0";
+"00000000001618E0" [shape=rectangle];
+"00000000001618E0" [style=filled,fontcolor = white,color="black"];
+"00000000001618E0" [label="SENTENCE"]
 
-6618424 [shape=oval];
-6618424 [style=filled,color="hotpink"];
-6618424 [label="23"]
+"00000000001618E0" [shape=rectangle];
+"00000000001618E0" [style=filled,fontcolor = white,color="black"];
+"00000000001618E0" [label="SENTENCE"]
+"00000000001618E0" -> "00000000001617C0";
+"00000000001617C0" [shape=rectangle];
+"00000000001617C0" [style=filled,fontcolor = white,color="black"];
+"00000000001617C0" [label="SENTENCE"]
+
+"00000000001617C0" [shape=rectangle];
+"00000000001617C0" [style=filled,fontcolor = white,color="black"];
+"00000000001617C0" [label="SENTENCE"]
+"00000000001617C0" -> "0000000000161850";
+"0000000000161850" [shape=rectangle];
+"0000000000161850" [style=filled,fontcolor = white,color="black"];
+"0000000000161850" [label="ya ustal"]
+
+"0000000000161850" [shape=rectangle];
+"0000000000161850" [style=filled,fontcolor = white,color="black"];
+"0000000000161850" [label="ya ustal"]
+"00000000001617C0" -> "000000000064DDB0";
+"000000000064DDB0" [shape=record];
+"000000000064DDB0" [style=filled,color="green"];
+"000000000064DDB0" [label="="]
+
+"000000000064DDB0" [shape=record];
+"000000000064DDB0" [style=filled,color="green"];
+"000000000064DDB0" [label="="]
+"000000000064DDB0" -> "000000000064DD30";
+"000000000064DD30" [shape=diamond];
+"000000000064DD30" [style=filled,color="cyan2"];
+"000000000064DD30" [label="y"]
+
+"000000000064DD30" [shape=diamond];
+"000000000064DD30" [style=filled,color="cyan2"];
+"000000000064DD30" [label="y"]
+"000000000064DDB0" -> "000000000064DE30";
+"000000000064DE30" [shape=oval];
+"000000000064DE30" [style=filled,color="hotpink"];
+"000000000064DE30" [label="1"]
+
+"000000000064DE30" [shape=oval];
+"000000000064DE30" [style=filled,color="hotpink"];
+"000000000064DE30" [label="1"]
+"00000000001618E0" -> "000000000064DFB0";
+"000000000064DFB0" [shape=record];
+"000000000064DFB0" [style=filled,color="green"];
+"000000000064DFB0" [label="="]
+
+"000000000064DFB0" [shape=record];
+"000000000064DFB0" [style=filled,color="green"];
+"000000000064DFB0" [label="="]
+"000000000064DFB0" -> "000000000064DF30";
+"000000000064DF30" [shape=diamond];
+"000000000064DF30" [style=filled,color="cyan2"];
+"000000000064DF30" [label="z"]
+
+"000000000064DF30" [shape=diamond];
+"000000000064DF30" [style=filled,color="cyan2"];
+"000000000064DF30" [label="z"]
+"000000000064DFB0" -> "000000000064E030";
+"000000000064E030" [shape=oval];
+"000000000064E030" [style=filled,color="hotpink"];
+"000000000064E030" [label="2"]
+
+"000000000064E030" [shape=oval];
+"000000000064E030" [style=filled,color="hotpink"];
+"000000000064E030" [label="2"]
 }
