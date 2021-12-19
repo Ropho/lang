@@ -1,133 +1,269 @@
 digraph structs {
-"00000000001614F0" [shape=rectangle];
-"00000000001614F0" [style=filled,fontcolor = white,color="black"];
-"00000000001614F0" [label="SENTENCE"]
-"00000000001614F0" -> "0000000000161580";
-"0000000000161580" [shape=rectangle];
-"0000000000161580" [style=filled,fontcolor = white,color="black"];
-"0000000000161580" [label="ya ustal"]
+"0000000000161930" [shape=rectangle];
+"0000000000161930" [style=filled,fontcolor = white,color="black"];
+"0000000000161930" [label="SENTENCE"]
+"0000000000161930" -> "00000000001616F0";
+"00000000001616F0" [shape=rectangle];
+"00000000001616F0" [style=filled,fontcolor = white,color="black"];
+"00000000001616F0" [label="SENTENCE"]
 
-"0000000000161580" [shape=rectangle];
-"0000000000161580" [style=filled,fontcolor = white,color="black"];
-"0000000000161580" [label="ya ustal"]
-"00000000001614F0" -> "000000000064D8B0";
-"000000000064D8B0" [shape=parallelogram];
-"000000000064D8B0" [style=filled,fontcolor = black,color="red"];
-"000000000064D8B0" [label="IF"]
+"00000000001616F0" [shape=rectangle];
+"00000000001616F0" [style=filled,fontcolor = white,color="black"];
+"00000000001616F0" [label="SENTENCE"]
+"00000000001616F0" -> "0000000000161780";
+"0000000000161780" [shape=rectangle];
+"0000000000161780" [style=filled,fontcolor = white,color="black"];
+"0000000000161780" [label="ya ustal"]
 
-"000000000064D8B0" [shape=parallelogram];
-"000000000064D8B0" [style=filled,fontcolor = black,color="red"];
-"000000000064D8B0" [label="IF"]
-"000000000064D8B0" -> "000000000064DB30";
-"000000000064DB30" [shape=record];
-"000000000064DB30" [style=filled,color="green"];
-"000000000064DB30" [label="?="]
+"0000000000161780" [shape=rectangle];
+"0000000000161780" [style=filled,fontcolor = white,color="black"];
+"0000000000161780" [label="ya ustal"]
+"00000000001616F0" -> "0000000000645730";
+"0000000000645730" [shape=parallelogram];
+"0000000000645730" [style=filled,fontcolor = black,color="red"];
+"0000000000645730" [label="DEFINE"]
 
-"000000000064DB30" [shape=record];
-"000000000064DB30" [style=filled,color="green"];
-"000000000064DB30" [label="?="]
-"000000000064DB30" -> "000000000064DA30";
-"000000000064DA30" [shape=record];
-"000000000064DA30" [style=filled,color="green"];
-"000000000064DA30" [label="-"]
+"0000000000645730" [shape=parallelogram];
+"0000000000645730" [style=filled,fontcolor = black,color="red"];
+"0000000000645730" [label="DEFINE"]
+"0000000000645730" -> "00000000006457B0";
+"00000000006457B0" [shape=diamond];
+"00000000006457B0" [style=filled,color="cyan2"];
+"00000000006457B0" [label="debil"]
 
-"000000000064DA30" [shape=record];
-"000000000064DA30" [style=filled,color="green"];
-"000000000064DA30" [label="-"]
-"000000000064DA30" -> "000000000064D9B0";
-"000000000064D9B0" [shape=diamond];
-"000000000064D9B0" [style=filled,color="cyan2"];
-"000000000064D9B0" [label="x"]
+"00000000006457B0" [shape=diamond];
+"00000000006457B0" [style=filled,color="cyan2"];
+"00000000006457B0" [label="debil"]
+"0000000000645730" -> "0000000000161810";
+"0000000000161810" [shape=rectangle];
+"0000000000161810" [style=filled,fontcolor = white,color="black"];
+"0000000000161810" [label="SENTENCE"]
 
-"000000000064D9B0" [shape=diamond];
-"000000000064D9B0" [style=filled,color="cyan2"];
-"000000000064D9B0" [label="x"]
-"000000000064DA30" -> "000000000064DAB0";
-"000000000064DAB0" [shape=oval];
-"000000000064DAB0" [style=filled,color="hotpink"];
-"000000000064DAB0" [label="2"]
+"0000000000161810" [shape=rectangle];
+"0000000000161810" [style=filled,fontcolor = white,color="black"];
+"0000000000161810" [label="SENTENCE"]
+"0000000000161810" -> "00000000001618A0";
+"00000000001618A0" [shape=rectangle];
+"00000000001618A0" [style=filled,fontcolor = white,color="black"];
+"00000000001618A0" [label="ya ustal"]
 
-"000000000064DAB0" [shape=oval];
-"000000000064DAB0" [style=filled,color="hotpink"];
-"000000000064DAB0" [label="2"]
-"000000000064DB30" -> "000000000064DBB0";
-"000000000064DBB0" [shape=oval];
-"000000000064DBB0" [style=filled,color="hotpink"];
-"000000000064DBB0" [label="12"]
+"00000000001618A0" [shape=rectangle];
+"00000000001618A0" [style=filled,fontcolor = white,color="black"];
+"00000000001618A0" [label="ya ustal"]
+"0000000000161810" -> "0000000000645A30";
+"0000000000645A30" [shape=record];
+"0000000000645A30" [style=filled,color="green"];
+"0000000000645A30" [label="="]
 
-"000000000064DBB0" [shape=oval];
-"000000000064DBB0" [style=filled,color="hotpink"];
-"000000000064DBB0" [label="12"]
-"000000000064D8B0" -> "00000000001618E0";
-"00000000001618E0" [shape=rectangle];
-"00000000001618E0" [style=filled,fontcolor = white,color="black"];
-"00000000001618E0" [label="SENTENCE"]
+"0000000000645A30" [shape=record];
+"0000000000645A30" [style=filled,color="green"];
+"0000000000645A30" [label="="]
+"0000000000645A30" -> "00000000006459B0";
+"00000000006459B0" [shape=diamond];
+"00000000006459B0" [style=filled,color="cyan2"];
+"00000000006459B0" [label="x"]
 
-"00000000001618E0" [shape=rectangle];
-"00000000001618E0" [style=filled,fontcolor = white,color="black"];
-"00000000001618E0" [label="SENTENCE"]
-"00000000001618E0" -> "00000000001617C0";
-"00000000001617C0" [shape=rectangle];
-"00000000001617C0" [style=filled,fontcolor = white,color="black"];
-"00000000001617C0" [label="SENTENCE"]
+"00000000006459B0" [shape=diamond];
+"00000000006459B0" [style=filled,color="cyan2"];
+"00000000006459B0" [label="x"]
+"0000000000645A30" -> "0000000000645AB0";
+"0000000000645AB0" [shape=oval];
+"0000000000645AB0" [style=filled,color="hotpink"];
+"0000000000645AB0" [label="1"]
 
-"00000000001617C0" [shape=rectangle];
-"00000000001617C0" [style=filled,fontcolor = white,color="black"];
-"00000000001617C0" [label="SENTENCE"]
-"00000000001617C0" -> "0000000000161850";
-"0000000000161850" [shape=rectangle];
-"0000000000161850" [style=filled,fontcolor = white,color="black"];
-"0000000000161850" [label="ya ustal"]
+"0000000000645AB0" [shape=oval];
+"0000000000645AB0" [style=filled,color="hotpink"];
+"0000000000645AB0" [label="1"]
+"0000000000161930" -> "00000000001619C0";
+"00000000001619C0" [shape=parallelogram];
+"00000000001619C0" [style=filled,fontcolor = black,color="red"];
+"00000000001619C0" [label="CALL"]
 
-"0000000000161850" [shape=rectangle];
-"0000000000161850" [style=filled,fontcolor = white,color="black"];
-"0000000000161850" [label="ya ustal"]
-"00000000001617C0" -> "000000000064DDB0";
-"000000000064DDB0" [shape=record];
-"000000000064DDB0" [style=filled,color="green"];
-"000000000064DDB0" [label="="]
+"00000000001619C0" [shape=parallelogram];
+"00000000001619C0" [style=filled,fontcolor = black,color="red"];
+"00000000001619C0" [label="CALL"]
+"00000000001619C0" -> "0000000000645CB0";
+"0000000000645CB0" [shape=diamond];
+"0000000000645CB0" [style=filled,color="cyan2"];
+"0000000000645CB0" [label="MAIN"]
 
-"000000000064DDB0" [shape=record];
-"000000000064DDB0" [style=filled,color="green"];
-"000000000064DDB0" [label="="]
-"000000000064DDB0" -> "000000000064DD30";
-"000000000064DD30" [shape=diamond];
-"000000000064DD30" [style=filled,color="cyan2"];
-"000000000064DD30" [label="y"]
+"0000000000645CB0" [shape=diamond];
+"0000000000645CB0" [style=filled,color="cyan2"];
+"0000000000645CB0" [label="MAIN"]
+"00000000001619C0" -> "0000000000168150";
+"0000000000168150" [shape=rectangle];
+"0000000000168150" [style=filled,fontcolor = white,color="black"];
+"0000000000168150" [label="SENTENCE"]
 
-"000000000064DD30" [shape=diamond];
-"000000000064DD30" [style=filled,color="cyan2"];
-"000000000064DD30" [label="y"]
-"000000000064DDB0" -> "000000000064DE30";
-"000000000064DE30" [shape=oval];
-"000000000064DE30" [style=filled,color="hotpink"];
-"000000000064DE30" [label="1"]
+"0000000000168150" [shape=rectangle];
+"0000000000168150" [style=filled,fontcolor = white,color="black"];
+"0000000000168150" [label="SENTENCE"]
+"0000000000168150" -> "00000000001680C0";
+"00000000001680C0" [shape=rectangle];
+"00000000001680C0" [style=filled,fontcolor = white,color="black"];
+"00000000001680C0" [label="SENTENCE"]
 
-"000000000064DE30" [shape=oval];
-"000000000064DE30" [style=filled,color="hotpink"];
-"000000000064DE30" [label="1"]
-"00000000001618E0" -> "000000000064DFB0";
-"000000000064DFB0" [shape=record];
-"000000000064DFB0" [style=filled,color="green"];
-"000000000064DFB0" [label="="]
+"00000000001680C0" [shape=rectangle];
+"00000000001680C0" [style=filled,fontcolor = white,color="black"];
+"00000000001680C0" [label="SENTENCE"]
+"00000000001680C0" -> "0000000000167DF0";
+"0000000000167DF0" [shape=rectangle];
+"0000000000167DF0" [style=filled,fontcolor = white,color="black"];
+"0000000000167DF0" [label="SENTENCE"]
 
-"000000000064DFB0" [shape=record];
-"000000000064DFB0" [style=filled,color="green"];
-"000000000064DFB0" [label="="]
-"000000000064DFB0" -> "000000000064DF30";
-"000000000064DF30" [shape=diamond];
-"000000000064DF30" [style=filled,color="cyan2"];
-"000000000064DF30" [label="z"]
+"0000000000167DF0" [shape=rectangle];
+"0000000000167DF0" [style=filled,fontcolor = white,color="black"];
+"0000000000167DF0" [label="SENTENCE"]
+"0000000000167DF0" -> "0000000000161A50";
+"0000000000161A50" [shape=rectangle];
+"0000000000161A50" [style=filled,fontcolor = white,color="black"];
+"0000000000161A50" [label="SENTENCE"]
 
-"000000000064DF30" [shape=diamond];
-"000000000064DF30" [style=filled,color="cyan2"];
-"000000000064DF30" [label="z"]
-"000000000064DFB0" -> "000000000064E030";
-"000000000064E030" [shape=oval];
-"000000000064E030" [style=filled,color="hotpink"];
-"000000000064E030" [label="2"]
+"0000000000161A50" [shape=rectangle];
+"0000000000161A50" [style=filled,fontcolor = white,color="black"];
+"0000000000161A50" [label="SENTENCE"]
+"0000000000161A50" -> "0000000000161AE0";
+"0000000000161AE0" [shape=rectangle];
+"0000000000161AE0" [style=filled,fontcolor = white,color="black"];
+"0000000000161AE0" [label="ya ustal"]
 
-"000000000064E030" [shape=oval];
-"000000000064E030" [style=filled,color="hotpink"];
-"000000000064E030" [label="2"]
+"0000000000161AE0" [shape=rectangle];
+"0000000000161AE0" [style=filled,fontcolor = white,color="black"];
+"0000000000161AE0" [label="ya ustal"]
+"0000000000161A50" -> "0000000000645E30";
+"0000000000645E30" [shape=record];
+"0000000000645E30" [style=filled,color="green"];
+"0000000000645E30" [label="="]
+
+"0000000000645E30" [shape=record];
+"0000000000645E30" [style=filled,color="green"];
+"0000000000645E30" [label="="]
+"0000000000645E30" -> "0000000000645DB0";
+"0000000000645DB0" [shape=diamond];
+"0000000000645DB0" [style=filled,color="cyan2"];
+"0000000000645DB0" [label="x"]
+
+"0000000000645DB0" [shape=diamond];
+"0000000000645DB0" [style=filled,color="cyan2"];
+"0000000000645DB0" [label="x"]
+"0000000000645E30" -> "0000000000645EB0";
+"0000000000645EB0" [shape=oval];
+"0000000000645EB0" [style=filled,color="hotpink"];
+"0000000000645EB0" [label="12"]
+
+"0000000000645EB0" [shape=oval];
+"0000000000645EB0" [style=filled,color="hotpink"];
+"0000000000645EB0" [label="12"]
+"0000000000167DF0" -> "0000000000645FB0";
+"0000000000645FB0" [shape=parallelogram];
+"0000000000645FB0" [style=filled,fontcolor = black,color="red"];
+"0000000000645FB0" [label="IF"]
+
+"0000000000645FB0" [shape=parallelogram];
+"0000000000645FB0" [style=filled,fontcolor = black,color="red"];
+"0000000000645FB0" [label="IF"]
+"0000000000645FB0" -> "0000000000646130";
+"0000000000646130" [shape=record];
+"0000000000646130" [style=filled,color="green"];
+"0000000000646130" [label="=="]
+
+"0000000000646130" [shape=record];
+"0000000000646130" [style=filled,color="green"];
+"0000000000646130" [label="=="]
+"0000000000646130" -> "00000000006460B0";
+"00000000006460B0" [shape=diamond];
+"00000000006460B0" [style=filled,color="cyan2"];
+"00000000006460B0" [label="x"]
+
+"00000000006460B0" [shape=diamond];
+"00000000006460B0" [style=filled,color="cyan2"];
+"00000000006460B0" [label="x"]
+"0000000000646130" -> "00000000006461B0";
+"00000000006461B0" [shape=oval];
+"00000000006461B0" [style=filled,color="hotpink"];
+"00000000006461B0" [label="1"]
+
+"00000000006461B0" [shape=oval];
+"00000000006461B0" [style=filled,color="hotpink"];
+"00000000006461B0" [label="1"]
+"0000000000645FB0" -> "0000000000167FA0";
+"0000000000167FA0" [shape=rectangle];
+"0000000000167FA0" [style=filled,fontcolor = white,color="black"];
+"0000000000167FA0" [label="SENTENCE"]
+
+"0000000000167FA0" [shape=rectangle];
+"0000000000167FA0" [style=filled,fontcolor = white,color="black"];
+"0000000000167FA0" [label="SENTENCE"]
+"0000000000167FA0" -> "0000000000168030";
+"0000000000168030" [shape=rectangle];
+"0000000000168030" [style=filled,fontcolor = white,color="black"];
+"0000000000168030" [label="ya ustal"]
+
+"0000000000168030" [shape=rectangle];
+"0000000000168030" [style=filled,fontcolor = white,color="black"];
+"0000000000168030" [label="ya ustal"]
+"0000000000167FA0" -> "00000000006463B0";
+"00000000006463B0" [shape=record];
+"00000000006463B0" [style=filled,color="green"];
+"00000000006463B0" [label="="]
+
+"00000000006463B0" [shape=record];
+"00000000006463B0" [style=filled,color="green"];
+"00000000006463B0" [label="="]
+"00000000006463B0" -> "0000000000646330";
+"0000000000646330" [shape=diamond];
+"0000000000646330" [style=filled,color="cyan2"];
+"0000000000646330" [label="x"]
+
+"0000000000646330" [shape=diamond];
+"0000000000646330" [style=filled,color="cyan2"];
+"0000000000646330" [label="x"]
+"00000000006463B0" -> "0000000000646430";
+"0000000000646430" [shape=oval];
+"0000000000646430" [style=filled,color="hotpink"];
+"0000000000646430" [label="2"]
+
+"0000000000646430" [shape=oval];
+"0000000000646430" [style=filled,color="hotpink"];
+"0000000000646430" [label="2"]
+"00000000001680C0" -> "0000000000646630";
+"0000000000646630" [shape=parallelogram];
+"0000000000646630" [style=filled,fontcolor = black,color="red"];
+"0000000000646630" [label="CALL"]
+
+"0000000000646630" [shape=parallelogram];
+"0000000000646630" [style=filled,fontcolor = black,color="red"];
+"0000000000646630" [label="CALL"]
+"0000000000646630" -> "00000000006466B0";
+"00000000006466B0" [shape=diamond];
+"00000000006466B0" [style=filled,color="cyan2"];
+"00000000006466B0" [label="debil"]
+
+"00000000006466B0" [shape=diamond];
+"00000000006466B0" [style=filled,color="cyan2"];
+"00000000006466B0" [label="debil"]
+"0000000000168150" -> "0000000000646930";
+"0000000000646930" [shape=record];
+"0000000000646930" [style=filled,color="green"];
+"0000000000646930" [label="="]
+
+"0000000000646930" [shape=record];
+"0000000000646930" [style=filled,color="green"];
+"0000000000646930" [label="="]
+"0000000000646930" -> "00000000006468B0";
+"00000000006468B0" [shape=diamond];
+"00000000006468B0" [style=filled,color="cyan2"];
+"00000000006468B0" [label="x"]
+
+"00000000006468B0" [shape=diamond];
+"00000000006468B0" [style=filled,color="cyan2"];
+"00000000006468B0" [label="x"]
+"0000000000646930" -> "00000000006469B0";
+"00000000006469B0" [shape=oval];
+"00000000006469B0" [style=filled,color="hotpink"];
+"00000000006469B0" [label="1"]
+
+"00000000006469B0" [shape=oval];
+"00000000006469B0" [style=filled,color="hotpink"];
+"00000000006469B0" [label="1"]
 }

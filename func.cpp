@@ -42,38 +42,53 @@ node *COND (node **tree, size_t *index, node *head) {
 
     printf ("COND: %d\n", *index);
     
-    node *tmp = new_node ();
-    tmp = *tree;
-    *tree = &head[*index];
-    (*tree)->left = tmp;
+    if (head[*index].data != CALL && head[*index].data != RETURN) {
+        node *tmp = new_node ();
+        tmp = *tree;
+        *tree = &head[*index];
+        (*tree)->left = tmp;
 
-    ++*index;
-    // printf ("%d", head[*index].data);
+        ++*index;
+        // printf ("%d", head[*index].data);
 
-    if (head[*index].data != '[')
-        SYNTAX_ERROR
-    ++*index;
+        if (head[*index].data != '[')
+            SYNTAX_ERROR
+        ++*index;
 
-    (*tree)->left  = E (&(*tree)->left,  index, head);
-printf ("EQEWQ:%d\n", head[*index].data);
-    if (check_operations (head[*index].data) == 0)
-        SYNTAX_ERROR
+        (*tree)->left  = E (&(*tree)->left,  index, head);
+    printf ("EQEWQ:%d\n", head[*index].data);
+        if (check_operations (head[*index].data) == 0)
+            SYNTAX_ERROR
 
-    (*tree)->left = SRAV (&(*tree)->left, index, head);
-    ++*index;
-    // printf ("\n%d\n", head[*index].data);
+        (*tree)->left = SRAV (&(*tree)->left, index, head);
+        ++*index;
+        // printf ("\n%d\n", head[*index].data);
 
-    (*tree)->left->right  = E (&(*tree)->left->right,  index, head);
-    // puts ("OK");
-    if (head[*index].data != ']')
-        SYNTAX_ERROR
-    ++*index;
+        (*tree)->left->right  = E (&(*tree)->left->right,  index, head);
+        // puts ("OK");
+        if (head[*index].data != ']')
+            SYNTAX_ERROR
+        ++*index;
 
-    printf ("\n%d %d\n", __LINE__, head[*index].data);
-    (*tree)->right = S (&(*tree)->right, index, head);
+        printf ("\n%d %d\n", __LINE__, head[*index].data);
+        (*tree)->right = S (&(*tree)->right, index, head);
 
-    printf ("AFTER {} %d\n", head[*index].data);
-    
+        printf ("AFTER {} %d\n", head[*index].data);
+    }
+    else {
+        (*tree) = &head[*index];
+        ++*index;
+        (*tree)->left = &head[*index];
+        ++*index;
+
+        if (head[*index].data != '(')
+            SYNTAX_ERROR
+        ++*index;
+        //ÀÐÃÓÌÅÍÒ!
+        if (head[*index].data != ')')
+            SYNTAX_ERROR
+        ++*index;
+    }
     // if ((*tree)->right->right == nullptr)
     //     abort ();
     // (*tree)->right->right  = E (&(*tree)->right->right,  index, head);
@@ -307,6 +322,50 @@ node* E (node **tree, size_t *index, node *head) {
 }
 
 
+node *FUCK (node **tree, size_t *index, node *head) {
+// puts ("FUCK HERR");
+    if (head[*index].type == CONDITION && head[*index].data == MAIN) {
+
+        head[*index].type = VARIABLE;
+        (*tree) = new_node();
+        (*tree)->type = CONDITION;
+        strcpy ((*tree)->id, "CALL");
+        
+        (*tree)->left = &head[*index];
+
+        ++*index;
+
+        (*tree)->right = S (&(*tree)->right, index, head);
+
+    }
+    else if (head[*index].type == CONDITION && head[*index].data == DEFINE) {
+        printf ("DUNCTION: %d\n", *index);
+        (*tree) = &head[*index];
+        ++*index;
+
+        (*tree)->left = &head[*index];
+
+        ++*index;
+
+        if (head[*index].data != '(')
+            SYNTAX_ERROR
+        ++*index;
+        // ÀÐÃÓÌÅÍÒ!!!
+        if (head[*index].data != ')')
+            SYNTAX_ERROR
+        
+        ++*index;
+        (*tree)->right = S (&(*tree)->right, index, head);  
+    }
+
+    else {
+        printf ("%d", head[*index].data);
+        (*tree) = E ((tree), index, head);
+    }
+    return *tree;
+}
+
+
 node *G (node **tree, size_t *index, node *head) {
 
     node* nd = S (tree, index, head);
@@ -331,15 +390,15 @@ node *S (node **tree, size_t *index, node *head) {
 
         (*tree)->left = new_node ();
         (*tree)->left->type = KILLER;
-        strcpy ((*tree)->left->id, "ya ustal"); 
-        (*tree)->right = E (&(*tree)->right, index, head);
-
+        strcpy ((*tree)->left->id, "ya ustal");
+        (*tree)->right = FUCK (&(*tree)->right, index, head);
     }
     else
         SYNTAX_ERROR
 
     printf ("S HERE: %d %d\n", head[*index - 1].data, head[*index].data);
-    int num_brackets = 1;
+    // int num_brackets = 1;
+
     while (head[*index].data == '?' && head[*index + 1].data != '}') {
         // puts ("OK");
 
@@ -359,7 +418,7 @@ node *S (node **tree, size_t *index, node *head) {
         }
 
         // printf ("%d\n", head[*index].data);
-        (*tree)->right = E (&(*tree)->right, index, head);
+        (*tree)->right = FUCK (&(*tree)->right, index, head);
 
         if (head[*index].data != '?')
             SYNTAX_ERROR
@@ -589,6 +648,22 @@ bool check_keywords (int a) {
             return 1;
         break;
 
+        case MAIN:
+            return 1;
+        break;
+        
+        case DEFINE:
+            return 1;
+        break;
+
+        case CALL:
+            return 1;
+        break;
+
+        case RETURN:
+            return 1;
+        break;
+
         default:
             return 0;
         break;
@@ -657,7 +732,12 @@ size_t token_ctor (node *head, char *s, size_t size) {
                 else
                     ++s;
             }
-            
+            if (head[index - 1].type == CONDITION && head[index - 1].data == DEFINE && head[index - 1].data == CALL) {
+
+                head[index].type = FUNCTION_NAME;
+
+            }
+
             if (check_func (head[index].data)) {
                 
                 head[index + 1] = head[index];
@@ -671,16 +751,21 @@ size_t token_ctor (node *head, char *s, size_t size) {
             else if (check_keywords (head[index].data)) {
 
                 head[index].type = CONDITION;
+                
                 if (head[index].data == IF)
                     strcpy (head[index].id, "IF"); 
                 else if (head[index].data == WHILE)
                     strcpy (head[index].id, "WHILE");
+                else if (head[index].data == MAIN)
+                    strcpy (head[index].id, "MAIN");
+                else if (head[index].data == DEFINE) 
+                    strcpy (head[index].id, "DEFINE");
+                else if (head[index].data == CALL)
+                    strcpy (head[index].id, "CALL");
                 else {
                     SYNTAX_ERROR
                 }
-                head[index].data = -1;
             }
-            
         }
         else {
             head[index].type = OPERATION;

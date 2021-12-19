@@ -1,10 +1,40 @@
 {
-    {
+    func debil () {
+        x = 1?
+    }?
 
-    if [x - 2 ?= 12] {
-        y = 1?
-        z = 2?
+    main{
+        x = 12?
+
+        if [x == 1] {
+            x = 2?
+        }?
+
+        call debil()?
+        x = 1?
     }?
 }
+$
+
+
+
+{
+    func debil{
+        x + 1 = 2?
+    }?
+    
+    main{
+
+        x=2?
+    }?
 }
 $
+
+
+
+func debil()
+{
+
+}
+
+call debil()?
